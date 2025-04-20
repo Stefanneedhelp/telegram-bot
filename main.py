@@ -64,7 +64,6 @@ async def test():
     await send_telegram_message("✅ Ovo je test poruka od bota!")
 
 asyncio.run(test())
-import asyncio from telegram import Bot import os
 
 BOT_TOKEN = os.getenv("BOT_TOKEN") CHAT_ID = 1601980040 # tvoj chat_id
 
