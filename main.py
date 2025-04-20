@@ -36,8 +36,6 @@ async def proveri_poslove():
                         )
         except Exception as e:
             print("Greška:", e)
-
-        await asyncio.sleep(60)  # proverava na svakih 60 sekundi
-
+       await asyncio.sleep(10)
 if __name__ == "__main__":
     asyncio.run(proveri_poslove())
