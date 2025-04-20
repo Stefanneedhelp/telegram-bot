@@ -17,7 +17,10 @@ URL = "https://www.needhelp.com/trouver-un-job"
 bot = Bot(token=BOT_TOKEN)
 vec_vidjeni = set()
 
-async def proveri_poslove():
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("✅ Bot je startovao!")
+    await send_telegram_message("✅ Ovo je test poruka od bota!")
+
     while True:
         try:
             response = requests.get(URL)
