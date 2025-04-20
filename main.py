@@ -61,4 +61,15 @@ async def start_bot():
 # Ako želiš da testiraš da li bot radi:
 # import asyncio
 # asyncio.run(send_telegram_message("✅ Ovo je test poruka!"))
+# Ako želiš da testiraš da li bot radi:
+# import asyncio
+# asyncio.run(send_telegram_message("✅ Ovo je test poruka!"))
+
+import asyncio
+
+async def test():
+    await send_telegram_message("✅ Ovo je test poruka od bota!")
+
+asyncio.run(test())
+
 
