@@ -3,6 +3,8 @@ import time
 import requests
 from bs4 import BeautifulSoup
 from telegram import Bot
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+import asyncio
 
 # Postavi svoj token i chat_id
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
