@@ -30,7 +30,7 @@ async def proveri_poslove():
                 if naziv not in vec_vidjeni:
                     if any(z in naziv for z in INTERESANTNA_ZANIMANJA):
                         vec_vidjeni.add(naziv)
-                        await bot.send_message(
+                      await send_telegram_message("🧪 Ovo je test poruka od bota!")
                             chat_id=CHAT_ID,
                             text=f"📌 Novi posao: {naziv}\n🔗 https://www.needhelp.com{link}"
                         )
