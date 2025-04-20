@@ -58,12 +58,6 @@ async def start_bot():
         time.sleep(300)  # proverava na svakih 5 minuta
         
 
-# Ako želiš da testiraš da li bot radi:
-# import asyncio
-# asyncio.run(send_telegram_message("✅ Ovo je test poruka!"))
-# Ako želiš da testiraš da li bot radi:
-# import asyncio
-# asyncio.run(send_telegram_message("✅ Ovo je test poruka!"))
 
 import asyncio
 
