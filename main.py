@@ -60,8 +60,7 @@ async def start_bot():
 
 import asyncio
 
-async def test():
-    await send_telegram_message("✅ Ovo je test poruka od bota!")
+
 
 
 
