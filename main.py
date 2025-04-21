@@ -10,7 +10,7 @@ CHAT_ID = os.getenv("CHAT_ID")
 INTERESANTNA_ZANIMANJA = [
     "Montage de meubles", "Menuisier", "ébéniste", "Électricité", "Pose carrelage",
     "Percer", "fixer", "Enduit", "Pose de porte", "portail", "Découpe",
-    "Pose sanitaire", "Pose parquet", "Peinture","Poser","Installation"
+    "Pose sanitaire", "Pose parquet", "Peinture","Poser","Installation","Reparer","Réparer"
 ]
 
 URL = "https://www.needhelp.com/trouver-un-job"
