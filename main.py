@@ -5,6 +5,18 @@ from bs4 import BeautifulSoup
 from telegram import Bot
 import unicodedata
 
+# ✅ DEBUG provera tokena i chat_id
+print("✅ Script je pokrenut")
+
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
+
+print("🔐 BOT_TOKEN:", BOT_TOKEN)
+print("🔐 CHAT_ID:", CHAT_ID)
+
+if not BOT_TOKEN or not CHAT_ID:
+    raise ValueError("BOT_TOKEN ili CHAT_ID nisu postavljeni!")
+
 # 🔧 Okruženje
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
