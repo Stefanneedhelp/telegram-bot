@@ -79,7 +79,8 @@ async def proveri_poslove():
         await asyncio.sleep(60)
 
 if __name__ == "__main__":
-    print("🚀 Bot pokrenut...")
+    print("✅ MAIN deo je pokrenut")  # <-- nova linija
     asyncio.run(proveri_poslove())
+
 
 
