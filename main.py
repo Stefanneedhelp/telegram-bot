@@ -17,12 +17,6 @@ print("🔐 CHAT_ID:", CHAT_ID)
 if not BOT_TOKEN or not CHAT_ID:
     raise ValueError("BOT_TOKEN ili CHAT_ID nisu postavljeni!")
 
-# 🔧 Okruženje
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-CHAT_ID = os.getenv("CHAT_ID")
-
-if not BOT_TOKEN or not CHAT_ID:
-    raise ValueError("BOT_TOKEN ili CHAT_ID nisu postavljeni! Proveri environment promenljive.")
 
 # 🧠 Normalizacija teksta (uklanja akcente)
 def normalize(text):
