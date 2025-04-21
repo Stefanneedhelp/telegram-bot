@@ -11,7 +11,7 @@ if not BOT_TOKEN or not CHAT_ID:
     raise ValueError("BOT_TOKEN ili CHAT_ID nisu postavljeni! Proveri environment promenljive.")
 
 INTERESANTNA_ZANIMANJA = [
-    "Montage de meubles", "Menuisier", "ébéniste", "Électricité", "Pose carrelage",
+    "Montage", "Menuisier", "ébéniste", "Électricité", "Pose carrelage",
     "Percer", "fixer", "Enduit", "Pose de porte", "portail", "Découpe",
     "Pose sanitaire", "Pose parquet", "Peinture", "Poser", "Installation", "Reparer", "Réparer", "Revêtements de sol"
 ]
