@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from telegram import Bot
 import unicodedata
 
-# ✅ DEBUG provera tokena i chat_id
 print("✅ Script je pokrenut")
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
