@@ -15,8 +15,8 @@ print("🔐 CHAT_ID:", CHAT_ID)
 
 if not BOT_TOKEN or not CHAT_ID:
     raise ValueError("BOT_TOKEN ili CHAT_ID nisu postavljeni!")
-
-
+   
+    
 # 🧠 Normalizacija teksta (uklanja akcente)
 def normalize(text):
     return ''.join(
