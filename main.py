@@ -5,8 +5,6 @@ from bs4 import BeautifulSoup
 from telegram import Bot
 import unicodedata
 
-print("✅ Script je pokrenut")
-
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
@@ -74,3 +72,4 @@ async def proveri_poslove():
 if __name__ == "__main__":
     print("🚀 Bot pokrenut...")
     asyncio.run(proveri_poslove())
+    print("✅ Script je pokrenut")
