@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from telegram import Bot
 import unicodedata
 
-  print("✅ Script je pokrenut")
+print("✅ Script je pokrenut")
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
