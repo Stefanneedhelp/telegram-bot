@@ -1,3 +1,4 @@
+print("🔥🔥🔥 Skripta je POKRENUTA! 🔥🔥🔥")
 import os
 import asyncio
 import requests
