@@ -84,10 +84,11 @@ async def proveri_poslove():
 
         await asyncio.sleep(60)
 
-if __name__ == "main.py":
+if __name__ == "__main__":
     print("✅ Bot pokrenut")
-    send_notification()  # 🔔 Pošalji poruku kad se startuje
+    send_notification()
     asyncio.run(proveri_poslove())
+
 
 
 
