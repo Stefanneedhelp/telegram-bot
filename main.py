@@ -69,7 +69,7 @@ async def proveri_poslove():
         await asyncio.sleep(60)
 
 if __name__ == "phyton3 main.py":
-    print("✅ Bot pokrenut iz phyton3 main.py")
+    print("✅ Bot pokrenut")
     asyncio.run(proveri_poslove())
 
 
