@@ -3,7 +3,6 @@ import asyncio
 import requests
 from bs4 import BeautifulSoup
 from telegram import Bot
-import unicodedata
 
 print("🐍 Python je pokrenuo skriptu!")
 
@@ -17,20 +16,6 @@ if not BOT_TOKEN or not CHAT_ID:
     raise ValueError("❌ BOT_TOKEN ili CHAT_ID nisu postavljeni!")
 
 bot = Bot(token=BOT_TOKEN)
-vec_vidjeni = set()
-
-# Normalizacija teksta
-def normalize(text):
-    return ''.join(
-        c for c in unicodedata.normalize('NFD', text)
-        if unicodedata.category(c) != 'Mn'
-    ).lower()
-
-INTERESANTNA_ZANIMANJA = [
-    "montage", "menuisier", "ebeniste", "electricite", "pose carrelage",
-    "percer", "fixer", "enduit", "pose de porte", "portail", "decoupe",
-    "pose sanitaire", "pose parquet", "peinture", "poser", "installation", "reparer", "revetements de sol"
-]
 
 URL = "https://www.needhelp.com/trouver-un-job"
 
@@ -38,45 +23,30 @@ async def send_notification():
     try:
         await bot.send_message(
             chat_id=CHAT_ID,
-            text="✅ Bot je uspešno pokrenut i čeka ponude!"
+            text="✅ Bot test pokrenut!"
         )
         print("📨 Test poruka uspešno poslata.")
     except Exception as e:
         print("❌ Greška u slanju test poruke:", e)
 
 async def proveri_poslove():
-    print("🔁 proveri_poslove() je pokrenut!")
+    print("✅ proveri_poslove() je pokrenut!")
+
+    try:
+        print("📥 Pripremam zahtev...")
+        headers = {"User-Agent": "Mozilla/5.0"}
+        response = requests.get(URL, headers=headers)
+        print("📄 HTML skinut!")
+
+        soup = BeautifulSoup(response.text, "html.parser")
+        ponude = soup.find_all("div", class_="jobCard__title___3AzEc")
+        print(f"🔍 Pronađeno {len(ponude)} ponuda...")
+
+    except Exception as e:
+        print("❌ Greška pre while petlje:", e)
+
     while True:
-        try:
-            headers = {"User-Agent": "Mozilla/5.0"}
-            response = requests.get(URL, headers=headers)
-            soup = BeautifulSoup(response.text, "html.parser")
-            ponude = soup.find_all("div", class_="jobCard__title___3AzEc")
-
-            print(f"🔍 Pronađeno {len(ponude)} ponuda...")
-
-            for ponuda in ponude:
-                naziv = ponuda.get_text(strip=True)
-                naziv_normalizovan = normalize(naziv)
-                link = ponuda.find_parent("a")["href"]
-
-                print("🎯 Ponuda:", naziv_normalizovan)
-
-                if naziv_normalizovan not in vec_vidjeni:
-                    if any(z in naziv_normalizovan for z in INTERESANTNA_ZANIMANJA):
-                        vec_vidjeni.add(naziv_normalizovan)
-                        try:
-                            await bot.send_message(
-                                chat_id=CHAT_ID,
-                                text=f"📌 Novi posao: {naziv}\n🔗 https://www.needhelp.com{link}"
-                            )
-                            print("📤 Poslata ponuda:", naziv)
-                        except Exception as e:
-                            print("❌ Greska pri slanju poruke:", e)
-
-        except Exception as e:
-            print("❌ Greska u proveri:", e)
-
+        print("♻️ Loop aktivna! Čekam 60 sekundi...")
         await asyncio.sleep(60)
 
 async def run_bot():
@@ -87,19 +57,13 @@ async def run_bot():
     except Exception as e:
         print("💥 Greška u proveri poslova:", e)
 
-import time
-
 if __name__ == "__main__":
     try:
         print("🔥 Skripta pokrenuta!")
-        print("🔐 BOT_TOKEN:", BOT_TOKEN)
-        print("🔐 CHAT_ID:", CHAT_ID)
-        asyncio.run(send_notification())
-        print("✅ Poruka poslata, ulazim u beskonačnu petlju...")
-        while True:
-            time.sleep(10)
+        asyncio.run(run_bot())
     except Exception as e:
-        print("❌ Došlo je do greške:", e)
+        print("❌ Došlo je do greške na glavnom nivou:", e)
+
 
 
 
