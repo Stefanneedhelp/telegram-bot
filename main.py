@@ -84,11 +84,16 @@ async def proveri_poslove():
             print("❌ Greska u proveri:", e)
 
         await asyncio.sleep(60)
-
 if __name__ == "__main__":
-    print("✅ Bot pokrenut")
-    send_notification()
-    asyncio.run(proveri_poslove())
+    try:
+        print("🔥 Skripta pokrenuta!")
+        print("🔐 BOT_TOKEN:", BOT_TOKEN)
+        print("🔐 CHAT_ID:", CHAT_ID)
+        send_notification()
+        asyncio.run(proveri_poslove())
+    except Exception as e:
+        print("❌ Došlo je do greške:", e)
+
 
 
 
