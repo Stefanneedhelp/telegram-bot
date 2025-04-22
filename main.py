@@ -45,6 +45,7 @@ async def send_notification():
         print("❌ Greška u slanju test poruke:", e)
 
 async def proveri_poslove():
+    print("🔁 proveri_poslove() je pokrenut!")
     while True:
         try:
             headers = {"User-Agent": "Mozilla/5.0"}
@@ -80,7 +81,11 @@ async def proveri_poslove():
 
 async def run_bot():
     await send_notification()
-    await proveri_poslove()
+    print("⚙️ Pozivam proveri_poslove()...")
+    try:
+        await proveri_poslove()
+    except Exception as e:
+        print("💥 Greška u proveri poslova:", e)
 
 if __name__ == "__main__":
     try:
@@ -89,7 +94,7 @@ if __name__ == "__main__":
         print("🔐 CHAT_ID:", CHAT_ID)
         asyncio.run(run_bot())
     except Exception as e:
-        print("❌ Došlo je do greške:", e)
+        print("❌ Došlo je do greške na glavnom nivou:", e)
 
 
 
