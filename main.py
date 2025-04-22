@@ -16,6 +16,22 @@ print("🔐 CHAT_ID:", CHAT_ID)
 if not BOT_TOKEN or not CHAT_ID:
     raise ValueError("❌ BOT_TOKEN ili CHAT_ID nisu postavljeni!")
 
+# ✅ Dodajemo test poruku
+def send_notification():
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+    data = {
+        "chat_id": CHAT_ID,
+        "text": "✅ Bot je uspešno pokrenut i čeka ponude!"
+    }
+
+    print("📨 Pokušavam da pošaljem test poruku Telegramu...")
+    try:
+        response = requests.post(url, data=data)
+        print("✅ Status kod:", response.status_code)
+        print("🧾 Odgovor sa servera:", response.text)
+    except Exception as e:
+        print("❌ Greška prilikom slanja poruke:", e)
+
 # Normalizacija teksta
 def normalize(text):
     return ''.join(
@@ -70,7 +86,9 @@ async def proveri_poslove():
 
 if __name__ == "main.py":
     print("✅ Bot pokrenut")
+    send_notification()  # 🔔 Pošalji poruku kad se startuje
     asyncio.run(proveri_poslove())
+
 
 
 
