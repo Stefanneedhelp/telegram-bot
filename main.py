@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from telegram import Bot
 import unicodedata
 
-print("🐍 Python je pokrenuo skriptu!")  # Da vidimo da je skripta startovana
+print("🐍 Python je pokrenuo skriptu!")  
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
