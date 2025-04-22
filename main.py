@@ -1,4 +1,3 @@
-print("🔥🔥🔥 Skripta je POKRENUTA! 🔥🔥🔥")
 import os
 import asyncio
 import requests
@@ -6,7 +5,7 @@ from bs4 import BeautifulSoup
 from telegram import Bot
 import unicodedata
 
-print("🐍 Python je pokrenuo skriptu!")  
+print("🐍 Python je pokrenuo skriptu!")
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
@@ -17,21 +16,8 @@ print("🔐 CHAT_ID:", CHAT_ID)
 if not BOT_TOKEN or not CHAT_ID:
     raise ValueError("❌ BOT_TOKEN ili CHAT_ID nisu postavljeni!")
 
-# ✅ Dodajemo test poruku
-def send_notification():
-    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-    data = {
-        "chat_id": CHAT_ID,
-        "text": "✅ Bot je uspešno pokrenut i čeka ponude!"
-    }
-
-    print("📨 Pokušavam da pošaljem test poruku Telegramu...")
-    try:
-        response = requests.post(url, data=data)
-        print("✅ Status kod:", response.status_code)
-        print("🧾 Odgovor sa servera:", response.text)
-    except Exception as e:
-        print("❌ Greška prilikom slanja poruke:", e)
+bot = Bot(token=BOT_TOKEN)
+vec_vidjeni = set()
 
 # Normalizacija teksta
 def normalize(text):
@@ -47,8 +33,16 @@ INTERESANTNA_ZANIMANJA = [
 ]
 
 URL = "https://www.needhelp.com/trouver-un-job"
-bot = Bot(token=BOT_TOKEN)
-vec_vidjeni = set()
+
+async def send_notification():
+    try:
+        await bot.send_message(
+            chat_id=CHAT_ID,
+            text="✅ Bot je uspešno pokrenut i čeka ponude!"
+        )
+        print("📨 Test poruka uspešno poslata.")
+    except Exception as e:
+        print("❌ Greška u slanju test poruke:", e)
 
 async def proveri_poslove():
     while True:
@@ -70,7 +64,6 @@ async def proveri_poslove():
                 if naziv_normalizovan not in vec_vidjeni:
                     if any(z in naziv_normalizovan for z in INTERESANTNA_ZANIMANJA):
                         vec_vidjeni.add(naziv_normalizovan)
-
                         try:
                             await bot.send_message(
                                 chat_id=CHAT_ID,
@@ -84,13 +77,17 @@ async def proveri_poslove():
             print("❌ Greska u proveri:", e)
 
         await asyncio.sleep(60)
+
+async def run_bot():
+    await send_notification()
+    await proveri_poslove()
+
 if __name__ == "__main__":
     try:
         print("🔥 Skripta pokrenuta!")
         print("🔐 BOT_TOKEN:", BOT_TOKEN)
         print("🔐 CHAT_ID:", CHAT_ID)
-        send_notification()
-        asyncio.run(proveri_poslove())
+        asyncio.run(run_bot())
     except Exception as e:
         print("❌ Došlo je do greške:", e)
 
