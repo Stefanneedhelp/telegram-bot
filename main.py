@@ -87,14 +87,19 @@ async def run_bot():
     except Exception as e:
         print("💥 Greška u proveri poslova:", e)
 
+import time
+
 if __name__ == "__main__":
     try:
         print("🔥 Skripta pokrenuta!")
         print("🔐 BOT_TOKEN:", BOT_TOKEN)
         print("🔐 CHAT_ID:", CHAT_ID)
-        asyncio.run(run_bot())
+        asyncio.run(send_notification())
+        print("✅ Poruka poslata, ulazim u beskonačnu petlju...")
+        while True:
+            time.sleep(10)
     except Exception as e:
-        print("❌ Došlo je do greške na glavnom nivou:", e)
+        print("❌ Došlo je do greške:", e)
 
 
 
