@@ -1,8 +1,13 @@
 import os
+import sys
 import asyncio
 import requests
 from bs4 import BeautifulSoup
 from telegram import Bot
+import functools
+
+# Osiguraj da svi print-ovi idu odmah u log (flush=True)
+print = functools.partial(print, flush=True)
 
 print("🐍 Python je pokrenuo skriptu!")
 
@@ -17,7 +22,8 @@ if not BOT_TOKEN or not CHAT_ID:
 
 bot = Bot(token=BOT_TOKEN)
 
-URL = "https://example.com"  # Test URL umesto needhelp.com
+# TEST URL — koristi se umesto needhelp dok ne utvrdimo da li je blokiran
+URL = "https://example.com"
 
 async def send_notification():
     try:
