@@ -1,3 +1,4 @@
+
 import os
 import sys
 import asyncio
@@ -6,29 +7,27 @@ from bs4 import BeautifulSoup
 from telegram import Bot
 import functools
 
-# Osiguraj da se svi print-ovi odmah šalju u log
 print = functools.partial(print, flush=True)
 
 print("🐍 Python je pokrenuo skriptu!")
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
+SCRAPER_API_KEY = os.getenv("SCRAPER_API_KEY")  # Dodaj ovo u Render env
 
-print("🔐 BOT_TOKEN:", BOT_TOKEN)
-print("🔐 CHAT_ID:", CHAT_ID)
-
-if not BOT_TOKEN or not CHAT_ID:
-    raise ValueError("❌ BOT_TOKEN ili CHAT_ID nisu postavljeni!")
+if not BOT_TOKEN or not CHAT_ID or not SCRAPER_API_KEY:
+    raise ValueError("❌ BOT_TOKEN, CHAT_ID ili SCRAPER_API_KEY nisu postavljeni!")
 
 bot = Bot(token=BOT_TOKEN)
 
 URL = "https://www.needhelp.com/trouver-un-job"
+SCRAPER_URL = f"http://api.scraperapi.com?api_key={SCRAPER_API_KEY}&url={URL}"
 
 async def send_notification():
     try:
         await bot.send_message(
             chat_id=CHAT_ID,
-            text="✅ Bot je pokrenut i proverava needhelp.com!"
+            text="✅ Bot koristi ScraperAPI i proverava ponude!"
         )
         print("📨 Test poruka uspešno poslata.")
     except Exception as e:
@@ -38,28 +37,18 @@ async def proveri_poslove():
     print("✅ proveri_poslove() je pokrenut!")
 
     try:
-        print("📥 Pripremam zahtev ka needhelp.com...")
+        print("🌐 Slanje zahteva preko ScraperAPI...")
 
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                          "AppleWebKit/537.36 (KHTML, like Gecko) "
-                          "Chrome/122.0.0.0 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-            "Accept-Language": "en-US,en;q=0.9",
-            "Connection": "keep-alive"
-        }
+        response = requests.get(SCRAPER_URL)
+        print("📄 HTML renderovan!")
 
-        response = requests.get(URL, headers=headers)
-        print("📄 HTML skinut!")
-
-        # Sačuvaj HTML odgovor u fajl
         with open("html_debug.txt", "w", encoding="utf-8") as f:
             f.write(response.text)
         print("📝 HTML sačuvan u 'html_debug.txt'")
 
         soup = BeautifulSoup(response.text, "html.parser")
+        # Ovde ćemo kasnije prilagoditi selektor ako se vidi pravi sadržaj
         ponude = soup.find_all("div", class_="jobCard__title___3AzEc")
-
         print(f"🔍 Pronađeno {len(ponude)} ponuda!")
 
     except Exception as e:
@@ -83,7 +72,6 @@ if __name__ == "__main__":
         asyncio.run(run_bot())
     except Exception as e:
         print("❌ Došlo je do greške na glavnom nivou:", e)
-
 
 
 
