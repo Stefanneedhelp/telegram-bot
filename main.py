@@ -17,13 +17,13 @@ if not BOT_TOKEN or not CHAT_ID:
 
 bot = Bot(token=BOT_TOKEN)
 
-URL = "https://www.needhelp.com/trouver-un-job"
+URL = "https://example.com"  # Test URL umesto needhelp.com
 
 async def send_notification():
     try:
         await bot.send_message(
             chat_id=CHAT_ID,
-            text="✅ Bot test pokrenut!"
+            text="✅ Bot test pokrenut (example.com test)!"
         )
         print("📨 Test poruka uspešno poslata.")
     except Exception as e:
@@ -33,14 +33,14 @@ async def proveri_poslove():
     print("✅ proveri_poslove() je pokrenut!")
 
     try:
-        print("📥 Pripremam zahtev...")
+        print("📥 Pripremam zahtev ka example.com...")
         headers = {"User-Agent": "Mozilla/5.0"}
         response = requests.get(URL, headers=headers)
         print("📄 HTML skinut!")
 
         soup = BeautifulSoup(response.text, "html.parser")
-        ponude = soup.find_all("div", class_="jobCard__title___3AzEc")
-        print(f"🔍 Pronađeno {len(ponude)} ponuda...")
+        title = soup.title.string if soup.title else "Nema title taga"
+        print(f"📰 Title stranice: {title}")
 
     except Exception as e:
         print("❌ Greška pre while petlje:", e)
