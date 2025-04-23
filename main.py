@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from telegram import Bot
 import functools
 
-# Osiguraj da svi print-ovi idu odmah u log (flush=True)
+# Obavezno: svi print-ovi odmah idu u log
 print = functools.partial(print, flush=True)
 
 print("🐍 Python je pokrenuo skriptu!")
@@ -22,14 +22,14 @@ if not BOT_TOKEN or not CHAT_ID:
 
 bot = Bot(token=BOT_TOKEN)
 
-# TEST URL — koristi se umesto needhelp dok ne utvrdimo da li je blokiran
-URL = "https://example.com"
+# Vraćamo se na pravi URL sajta
+URL = "https://www.needhelp.com/trouver-un-job"
 
 async def send_notification():
     try:
         await bot.send_message(
             chat_id=CHAT_ID,
-            text="✅ Bot test pokrenut (example.com test)!"
+            text="✅ Bot je pokrenut i proverava needhelp.com!"
         )
         print("📨 Test poruka uspešno poslata.")
     except Exception as e:
@@ -39,17 +39,27 @@ async def proveri_poslove():
     print("✅ proveri_poslove() je pokrenut!")
 
     try:
-        print("📥 Pripremam zahtev ka example.com...")
-        headers = {"User-Agent": "Mozilla/5.0"}
+        print("📥 Pripremam zahtev ka needhelp.com...")
+
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                          "AppleWebKit/537.36 (KHTML, like Gecko) "
+                          "Chrome/122.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Connection": "keep-alive"
+        }
+
         response = requests.get(URL, headers=headers)
         print("📄 HTML skinut!")
 
         soup = BeautifulSoup(response.text, "html.parser")
-        title = soup.title.string if soup.title else "Nema title taga"
-        print(f"📰 Title stranice: {title}")
+        ponude = soup.find_all("div", class_="jobCard__title___3AzEc")
+
+        print(f"🔍 Pronađeno {len(ponude)} ponuda!")
 
     except Exception as e:
-        print("❌ Greška pre while petlje:", e)
+        print("❌ Greška prilikom zahteva:", e)
 
     while True:
         print("♻️ Loop aktivna! Čekam 60 sekundi...")
