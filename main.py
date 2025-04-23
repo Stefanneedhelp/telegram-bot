@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from telegram import Bot
 import functools
 
-# Obavezno: svi print-ovi odmah idu u log
+# Odmah flushuj sve printove u log
 print = functools.partial(print, flush=True)
 
 print("🐍 Python je pokrenuo skriptu!")
@@ -22,7 +22,6 @@ if not BOT_TOKEN or not CHAT_ID:
 
 bot = Bot(token=BOT_TOKEN)
 
-# Vraćamo se na pravi URL sajta
 URL = "https://www.needhelp.com/trouver-un-job"
 
 async def send_notification():
@@ -52,6 +51,10 @@ async def proveri_poslove():
 
         response = requests.get(URL, headers=headers)
         print("📄 HTML skinut!")
+
+        # TEST: Prikaži deo HTML koda u log
+        print("🧪 Prvih 1000 karaktera HTML-a:")
+        print(response.text[:1000])
 
         soup = BeautifulSoup(response.text, "html.parser")
         ponude = soup.find_all("div", class_="jobCard__title___3AzEc")
