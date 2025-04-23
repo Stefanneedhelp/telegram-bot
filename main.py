@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from telegram import Bot
 import functools
 
-# Odmah flushuj sve printove u log
+# Osiguraj da se svi print-ovi odmah šalju u log
 print = functools.partial(print, flush=True)
 
 print("🐍 Python je pokrenuo skriptu!")
@@ -52,9 +52,10 @@ async def proveri_poslove():
         response = requests.get(URL, headers=headers)
         print("📄 HTML skinut!")
 
-        # TEST: Prikaži deo HTML koda u log
-        print("🧪 Prvih 1000 karaktera HTML-a:")
-        print(response.text[:1000])
+        # Sačuvaj HTML odgovor u fajl
+        with open("html_debug.txt", "w", encoding="utf-8") as f:
+            f.write(response.text)
+        print("📝 HTML sačuvan u 'html_debug.txt'")
 
         soup = BeautifulSoup(response.text, "html.parser")
         ponude = soup.find_all("div", class_="jobCard__title___3AzEc")
